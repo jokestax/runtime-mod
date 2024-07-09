@@ -124,7 +124,7 @@ func PrepareGitRepositories(
 	//* clone the gitops-template repo
 	gitopsRepo, err := gitClient.CloneRefSetMain(gitopsTemplateBranch, gitopsDir, gitopsTemplateURL)
 	if err != nil {
-		err1 := fmt.Errorf("error opening repo at: %s", gitopsDir)
+		err1 := fmt.Errorf("error opening repo at: %s, err: %v", gitopsDir, err)
 		return err1
 	}
 	log.Info().Msg("gitops repository clone complete")
