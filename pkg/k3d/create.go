@@ -55,8 +55,7 @@ func ClusterCreate(clusterName string, k1Dir string, k3dClient string, kubeconfi
 
 	kConfigString, _, err := pkg.ExecShellReturnStrings(k3dClient, "kubeconfig", "get", clusterName)
 	if err != nil {
-		errmsg := fmt.Sprintf("error opening repo at: %s, err: %v", gitopsDir, err)
-		return errmsg
+		return err
 	}
 
 	err = os.WriteFile(kubeconfig, []byte(kConfigString), 0644)
@@ -125,7 +124,8 @@ func PrepareGitRepositories(
 	//* clone the gitops-template repo
 	gitopsRepo, err := gitClient.CloneRefSetMain(gitopsTemplateBranch, gitopsDir, gitopsTemplateURL)
 	if err != nil {
-		return err
+		err1 := fmt.Errorf("error opening repo at: %s", gitopsDir)
+		return err1
 	}
 	log.Info().Msg("gitops repository clone complete")
 
