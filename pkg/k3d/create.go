@@ -55,7 +55,8 @@ func ClusterCreate(clusterName string, k1Dir string, k3dClient string, kubeconfi
 
 	kConfigString, _, err := pkg.ExecShellReturnStrings(k3dClient, "kubeconfig", "get", clusterName)
 	if err != nil {
-		return err
+		errmsg := fmt.Sprintf("error opening repo at: %s, err: %v", gitopsDir, err)
+		return errmsg
 	}
 
 	err = os.WriteFile(kubeconfig, []byte(kConfigString), 0644)
